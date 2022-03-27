@@ -32,6 +32,12 @@ return {
 			local Function = Self[OnEvent]
 			if not Function then error('No function set.') end
 			
+			if typeof(Function) == 'RBXScriptSignal' then
+				Function:Fire(LocalPlayer, ...)
+				
+				return
+			end
+			
 			Function(LocalPlayer, ...)
 		end
 		
