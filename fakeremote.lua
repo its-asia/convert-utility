@@ -6,7 +6,7 @@ return {
 		local BindableOnEvent = Instance.new('BindableEvent')
 		
 		local EmptyFunction = function() end
-		local FakeRemote = {OnServerEvent = BindableOnEvent, FireServer = EmptyFunction, OnServerInvoke = EmptyFunction, InvokeServer = EmptyFunction} -- set all possible functions for syntax purposes
+		local FakeRemote = {OnServerEvent = BindableOnEvent.Event, FireServer = EmptyFunction, OnServerInvoke = EmptyFunction, InvokeServer = EmptyFunction} -- set all possible functions for syntax purposes
 		
 		local OnEvent
 		local FireEvent
