@@ -33,12 +33,11 @@ return {
 			if not Function then error('No function set.') end
 			
 			if typeof(Function) == 'RBXScriptSignal' then
-				Function:Fire(LocalPlayer, ...)
-				
-				return
+				local Return = BindableOnEvent:Fire(LocalPlayer, ...)
+				return Return
 			end
 			
-			Function(LocalPlayer, ...)
+			return Function(LocalPlayer, ...)
 		end
 		
 		if Bindable == true then -- Remote functions will have their own function set
