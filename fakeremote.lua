@@ -40,27 +40,13 @@ return {
 			return Function(LocalPlayer, ...)
 		end
 		
-		FakeRemote[FireEvent:gsub('Server', 'Client')] = function(Self, ...) -- :FireServer equivalent
-			local Function = Self[OnEvent]
-			if not Function then error('No function set.') end
-			
-			if typeof(Function) == 'RBXScriptSignal' then
-				local Return = BindableOnEvent:Fire(LocalPlayer, ...)
-				return Return
-			end
-			
-			return Function(LocalPlayer, ...)
-		end
-		
 		if Bindable == true then -- Remote functions will have their own function set
 			BindableOnEvent:Destroy()
 			
 			return FakeRemote
 		end
 		
-		FakeRemote[OnEvent] = BindableOnEvent.Event
-		FakeRemote[OnEvent:gsub('Server', 'Client')] = BindableOnEvent.Event
-										
+		FakeRemote[OnEvent] = BindableOnEvent.Event					
 		FakeRemote['Destroy'] = function(Self)
 			if Self == FakeRemote then
 				BindableOnEvent:Destroy()
