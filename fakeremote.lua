@@ -44,8 +44,7 @@ return {
 			if not Function then error('No function set.') end
 
 			if typeof(Function) == 'RBXScriptSignal' then
-				local Return = BindableOnEvent:Fire(LocalPlayer, ...)
-				return Return
+				return BindableOnEvent:Fire(LocalPlayer, ...)
 			end
 
 			return Function(LocalPlayer, ...)
