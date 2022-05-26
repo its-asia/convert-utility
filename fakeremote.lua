@@ -6,7 +6,11 @@ return {
 		local BindableOnEvent = Instance.new('BindableEvent')
 
 		local EmptyFunction = function() end
+		
+		local Remote = Instance.new('RemoteEvent')
+		
 		local FakeRemote = {OnServerEvent = BindableOnEvent.Event, FireServer = EmptyFunction, OnServerInvoke = EmptyFunction, InvokeServer = EmptyFunction} -- set all possible functions for syntax purposes
+		local FakeRemoteMetatable = {}
 
 		local OnEvent
 		local ClientOnEvent
@@ -74,6 +78,10 @@ return {
 			end
 		end
 		
-		return FakeRemote
+		FakeRemoteMetatable.__index = function(self, index)
+			return rawget(FakeRemote, index) or Remote[index]
+		end
+		
+		return setmetatable(FakeRemote, FakeRemoteMetatable)
 	end,
 }
