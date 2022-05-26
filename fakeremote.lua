@@ -14,7 +14,7 @@ return {
 		local FireEvent
 		local ClientFireEvent
 		
-		local FireAll
+		local FireAll = 'FireAllClients'
 
 		local Bindable
 		if Type == 'RemoteEvent' then
@@ -23,8 +23,6 @@ return {
 			
 			FireEvent = 'FireServer'
 			ClientFireEvent = 'FireClient'
-			
-			FireAll = 'FireAllClients'
 
 			Bindable = false
 		elseif Type == 'RemoteFunction' then
@@ -54,6 +52,7 @@ return {
 		end
 
 		FakeRemote[ClientFireEvent] = FakeRemote[FireEvent]
+		FakeRemote[FireAll] = FakeRemote[FireEvent]
 
 		if Bindable == true then -- Remote functions will have their own function set
 			BindableOnEvent:Destroy()
