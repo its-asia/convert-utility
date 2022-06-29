@@ -73,7 +73,14 @@ return function(Remote)
 
 	Override.Instance = Remote
 	MetaTable.__index = function(self, Index)
-		return Override[Index] or CustomProperties[Index] or Remote[Index]
+		local Value = Override[Index] or CustomProperties[Index] or Remote[Index]
+		if typeof(Value) == 'function' then
+			return function(_, ...)
+				return Value(Remote, ...)
+			end
+		else
+			return Value
+		end
 	end
 
 	MetaTable.__newindex = function(self, Index, Value)
