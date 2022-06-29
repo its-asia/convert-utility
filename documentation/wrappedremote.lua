@@ -11,19 +11,24 @@ local MetaServices = {__index = function(self, Index) return rawget(Services, In
 setmetatable(Services, MetaServices)
 
 local LocalPlayer = Services.Players.LocalPlayer
+if LocalPlayer == nil then
+	repeat task.wait() LocalPlayer = Services.Players.LocalPlayer
+	until LocalPlayer ~= nil
+end
+
 return function(Remote)
 	local ServerBindable = Instance.new('BindableEvent')
 	local ClientBindable = Instance.new('BindableEvent')
-	
+
 	local CustomProperties = {
 		OnServerInvoke = function() end,
 		OnClientInvoke = function() end,
 	}
-	
+
 	local Override = {
 		OnServerEvent = ServerBindable.Event,
 		OnClientEvent = ClientBindable.Event,
-		
+
 		FireServer = function(self, ...)
 			ServerBindable:Fire(LocalPlayer, ...)
 		end,
@@ -35,17 +40,17 @@ return function(Remote)
 		FireAllClients = function(self, ...)
 			ClientBindable:Fire(...)
 		end,
-		
+
 		InvokeServer = function(self, ...)
 			local OnInvoke = CustomProperties.OnServerInvoke
 			local Type = typeof(OnInvoke)
-			
+
 			if Type ~= 'function' then
 				error('attempt to call a ' .. Type .. ' value')
-				
+
 				return
 			end
-			
+
 			OnInvoke(LocalPlayer, ...)
 		end,
 
@@ -74,10 +79,10 @@ return function(Remote)
 	MetaTable.__newindex = function(self, Index, Value)
 		if CustomProperties[Index] then
 			CustomProperties[Index] = Value
-			
+
 			return
 		end
-		
+
 		Remote[Index] = Value
 	end
 
