@@ -3,7 +3,7 @@
 
 -- example
 -- local Remote = (github stuff)
--- Remote.Instance.Parent = workspace
+-- workspace.Baseplate.Parent = Remote.Instance
 
 local Services = {}
 local MetaServices = {__index = function(self, Index) return rawget(Services, Index) or game:GetService(Index) end}
