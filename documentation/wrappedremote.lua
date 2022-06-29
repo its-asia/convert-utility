@@ -25,10 +25,14 @@ return function(Remote)
 		OnClientEvent = ClientBindable.Event,
 		
 		FireServer = function(self, ...)
-			ServerBindable:Fire(...)
+			ServerBindable:Fire(LocalPlayer, ...)
 		end,
 
-		FireClient = function(self, ...)
+		FireClient = function(self, Player, ...)
+			ClientBindable:Fire(...)
+		end,
+
+		FireAllClients = function(self, ...)
 			ClientBindable:Fire(...)
 		end,
 		
